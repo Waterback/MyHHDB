@@ -1,3 +1,7 @@
+body {
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+
 .container {
   height:100vh;
   display: grid;
@@ -15,13 +19,13 @@
   .container {
     height:100vh;
     display: grid;
-    grid-template-rows: 100px minmax(min-content, max-content) 1fr 100px;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 100px minmax(min-content, max-content) 1fr 150px;
+    grid-template-columns: 55% 45%;
     grid-template-areas:
-      "header header header header"
-      "messages messages messages messages"
-      "data_list data_list formdiv formdiv"
-      "footer footer footer footer"
+      "header header"
+      "messages messages"
+      "data_list formdiv"
+      "footer footer"
     ;
       grid-gap: 10px 10px;
   }
@@ -36,14 +40,72 @@ messages {
 }
 
 data_list {
-  background:gold;
+  background:darkgrey;
   grid-area: data_list;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 formdiv {
   background:lightgreen;
   grid-area: formdiv;
 }
-footer {
+
+.footer {
   background:lightblue;
   grid-area: footer;
 }
+
+.tablelines {
+  display:grid;
+  grid-template-rows: 100%;
+  grid-row-gap: 2px;
+}
+
+.invoiceline {
+  display:grid;
+  background: lightgray;
+  grid-template-columns: 10% 17.5% 10% repeat(5, 12%);
+  grid-column-gap: 1.5px;
+  margin-top: 1px;
+  border-radius: 8px;
+  grid-template-areas:
+    "patient drs amount invoicedate duedate sent paid repaid"
+
+}
+
+.patient {
+  grid-area: patient;
+  padding: 5px;
+  font-weight: bold;
+}
+.drs {
+  grid-area: drs;
+  align-items: flex-start;
+}
+
+.amount {
+  grid-area: amount;
+}
+
+.invoicedate {
+  grid-area: invoicedate ;
+}
+
+.duedate {
+  grid-area: duedate;
+}
+
+.sent {
+  grid-area: sent;
+}
+
+.paid {
+  grid-area: paid;
+}
+
+.repaid {
+  grid-area: repaid;
+}
+
+
+

@@ -4,17 +4,18 @@
     <data_list >
     <h1>All Invoices</h1>
         {% for invoice in invoices %}
-            <div>
-                <label>Patient: </label><b>{{ invoice.patient.patient}}</b> -
-             <label>Comment</label> <b>{{ invoice.comment or '' }} </b> -
-            <label>Amount</label> <b>{{ invoice.amount }} </b> -
-             <label>Invoice Date</label> <b>{{ invoice.invoice_date}} </b> -
-            <label>Due</label> <b>{{ invoice.due_date or ''}} </b> -
-
-            <label>Sent:</label><b> {% if invoice.sent_to_pkv==True %} <input type="checkbox" checked="checked"> =>{{ invoice.sent_at.strftime(date_format) }} {% endif %} {% if not invoice.sent_to_pkv%} <input type="checkbox" >{% endif %} </b>
-            <label>Paid:</label><b> {% if invoice.paid==True %} <input type="checkbox" checked="checked"> =>{{ invoice.paid_at.strftime(date_format) }} {% endif %} {% if not invoice.paid %} <input type="checkbox" >{% endif %} </b>
-            <label>Repaid:</label><b> {% if invoice.repaid==True %} <input type="checkbox" checked="checked"> =>{{ invoice.repaid_at.strftime(date_format) }} {% endif %} {% if not invoice.repaid %} <input type="checkbox" >{% endif %} </b>
-        </div>
+         <div class="tablelines">
+          <div class="invoiceline">
+              <div class="patient"><b>{{ invoice.patient.patient}}</b></div>
+              <div class="drs"><label>Dottores</label> <br/><b>{{ invoice.comment or '' }} </b></div>
+              <div class="amount"><label>Amount</label><br/> <b>{{ invoice.amount }} €</b></div>
+              <div class="invoicedate"><label>Invoice Date</label><br/> <b>{{ invoice.invoice_date}} </b></div>
+              <div class="duedate"> <label>Due</label><br/> <b>{{ invoice.due_date or '-'}}</b></div>
+              <div class="sent"><label>Sent:</label>  <br />  <b> {% if invoice.sent_to_pkv==True %} <input type="checkbox" checked="checked"> =>{{ invoice.sent_at.strftime(date_format) }} {% endif %} {% if not invoice.sent_to_pkv%} <input type="checkbox" >{% endif %} </b></div>
+              <div class="paid"><label>Paid:</label><br /><b> {% if invoice.paid==True %} <input type="checkbox" checked="checked"> =>{{ invoice.paid_at.strftime(date_format) }} {% endif %} {% if not invoice.paid %} <input type="checkbox" >{% endif %} </b></div>
+              <div class="repaid"><label>Repaid:</label><br /><b> {% if invoice.repaid==True %} <input type="checkbox" checked="checked"> =>{{ invoice.repaid_at.strftime(date_format) }} {% endif %} {% if not invoice.repaid %} <input type="checkbox" >{% endif %} </b></div>
+          </div>
+         </div>
     {% endfor %}
  </data_list>
     <formdiv>
@@ -36,9 +37,9 @@
         </p>
 
         <p>
-            {{ form.comment.label }}<br>
-            {{ form.comment(size=32) }}<br>
-            {% for error in form.comment.errors %}
+            {{ form.drs.label }}<br>
+            {{ form.drs(size=32) }}<br>
+            {% for error in form.drs.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

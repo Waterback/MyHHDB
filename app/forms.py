@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
 class InvoiceForm(FlaskForm):
     #patient = StringField('Patient', validators=[DataRequired()])
     amount = FloatField('Amount', validators=[DataRequired()])
-    comment = StringField('Comment', validators=[])
+    drs = StringField('Dottores', validators=[])
     sent = BooleanField('Sent to PKV')
     due_date = DateField('Date Due', validators=[Optional()])
     paid = BooleanField('Paid')

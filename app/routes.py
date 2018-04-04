@@ -69,7 +69,7 @@ def invoices():
 
         inv = PKVInvoice(patient_id=form.patient.data,
                          amount=form.amount.data,
-                         comment=form.comment.data,
+                         comment=form.drs.data,
                          invoice_date=form.invoice_date.data,
                          due_date=form.due_date.data,
                          sent_to_pkv=form.sent.data,
