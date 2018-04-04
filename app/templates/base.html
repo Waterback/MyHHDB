@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+      {% if title %}
+      <title>{{ title }} - HHDB</title>
+      {% else %}
+      <title>Welcome to MyHHDB</title>
+      {% endif %}
+    </head>
+    <body>
+    <div class="container">
+        <header><h1>MyHHDB</h1>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('invoices') }}">Invoices</a>
+            {% if current_user.is_anonymous %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% else %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </header>
+        <messages>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        </messages>
+        {% block content %}{% endblock %}
+
+    <footer>f</footer>
+    </div>
+    </body>
+</html>

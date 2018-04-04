@@ -1,0 +1,49 @@
+.container {
+  height:100vh;
+  display: grid;
+  grid-template-rows: 80px minmax(min-content, max-content) 3fr 2fr 40px;
+  grid-template-columns: 100%;
+  grid-template-areas:
+    "header"
+    "messages"
+    "formdiv"
+    "data_list"
+    "footer"
+  ;
+}
+@media screen and (min-width: 44.001em) {
+  .container {
+    height:100vh;
+    display: grid;
+    grid-template-rows: 100px minmax(min-content, max-content) 1fr 100px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-areas:
+      "header header header header"
+      "messages messages messages messages"
+      "data_list data_list formdiv formdiv"
+      "footer footer footer footer"
+    ;
+      grid-gap: 10px 10px;
+  }
+}
+header {
+  background:tomato;
+  grid-area: header;
+}
+messages {
+  background:moccasin;
+  grid-area: messages;
+}
+
+data_list {
+  background:gold;
+  grid-area: data_list;
+}
+formdiv {
+  background:lightgreen;
+  grid-area: formdiv;
+}
+footer {
+  background:lightblue;
+  grid-area: footer;
+}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <data_list >
+    <h1>All Invoices</h1>
+        {% for invoice in invoices %}
+            <div>
+                <label>Patient: </label><b>{{ invoice.patient.patient}}</b> -
+             <label>Comment</label> <b>{{ invoice.comment or '' }} </b> -
+            <label>Amount</label> <b>{{ invoice.amount }} </b> -
+             <label>Invoice Date</label> <b>{{ invoice.invoice_date}} </b> -
+            <label>Due</label> <b>{{ invoice.due_date or ''}} </b> -
+
+            <label>Sent:</label><b> {% if invoice.sent_to_pkv==True %} <input type="checkbox" checked="checked"> =>{{ invoice.sent_at.strftime(date_format) }} {% endif %} {% if not invoice.sent_to_pkv%} <input type="checkbox" >{% endif %} </b>
+            <label>Paid:</label><b> {% if invoice.paid==True %} <input type="checkbox" checked="checked"> =>{{ invoice.paid_at.strftime(date_format) }} {% endif %} {% if not invoice.paid %} <input type="checkbox" >{% endif %} </b>
+            <label>Repaid:</label><b> {% if invoice.repaid==True %} <input type="checkbox" checked="checked"> =>{{ invoice.repaid_at.strftime(date_format) }} {% endif %} {% if not invoice.repaid %} <input type="checkbox" >{% endif %} </b>
+        </div>
+    {% endfor %}
+ </data_list>
+    <formdiv>
+        <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.patient.label }}<br>
+            {{ form.patient(size=1) }}<br>
+            {% for error in form.patient.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.amount.label }}<br>
+            {{ form.amount(size=32) }}<br>
+            {% for error in form.amount.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.comment.label }}<br>
+            {{ form.comment(size=32) }}<br>
+            {% for error in form.comment.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+            <p>
+            {{ form.invoice_date.label }}<br>
+            {{ form.invoice_date(size=10) }}<br>
+            {% for error in form.invoice_date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+                <p>
+            {{ form.due_date.label }}<br>
+            {{ form.due_date(size=10) }}<br>
+            {% for error in form.due_date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.sent.label }}<br>
+            {{ form.sent }}<br>
+            {{ form.paid.label }}<br>
+            {{ form.paid }}<br>
+            {{ form.repaid.label }}<br>
+            {{ form.repaid }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </formdiv>
+
+{% endblock %}
