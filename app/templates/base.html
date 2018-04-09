@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"-->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage-1.css') }}">
       {% if title %}
       <title>{{ title }} - HHDB</title>
       {% else %}
@@ -9,15 +10,30 @@
       {% endif %}
     </head>
     <body>
-    <div class="container">
-        <header><h1>MyHHDB</h1>
-            <a href="{{ url_for('index') }}">Home</a>
+    <div class="wrapper">
+        <header>
+        <h3>MyHHDB</h3>
+                <ul id="menu">
+        <li> <a href="{{ url_for('index') }}">Home</a></li>
+        <li>
             <a href="{{ url_for('invoices') }}">Invoices</a>
+            <ul class="hidden">
+                <li><a href="{{ url_for('invoices') }}?year={{nowyear}}">{{nowyear}}</a></li>
+                <li><a href="{{ url_for('invoices') }}?year={{nowyear}}">{{previousyear}}</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">User ￬</a>
+            <ul class="hidden">
+                <li>
             {% if current_user.is_anonymous %}
                 <a href="{{ url_for('login') }}">Login</a>
             {% else %}
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
+                </li>
+             </ul>
+        </li></ul>
         </header>
         <messages>
         {% with messages = get_flashed_messages() %}
@@ -34,5 +50,8 @@
 
     <footer>f</footer>
     </div>
+    <!--script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script-->
     </body>
 </html>

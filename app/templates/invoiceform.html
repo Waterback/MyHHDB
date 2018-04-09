@@ -1,0 +1,20 @@
+{% block invoicelist %}
+
+<h1>All Invoices</h1>
+        {% for invoice in invoices %}
+         <div class="tablelines">
+          <div class="invoiceline">
+              <div class="patient"><b>{{ invoice.patient.patient}}</b></div>
+              <div class="drs"><label>Dottores</label> <br/><b>{{ invoice.comment or '' }} </b></div>
+              <div class="amount"><label>Amount</label><br/> <b>{{ invoice.amount }} €</b></div>
+              <div class="invoicedate"><label>Invoice Date</label><br/> <b>{{ invoice.invoice_date}} </b></div>
+              <div class="duedate"> <label>Due</label><br/> <b>{{ invoice.due_date or '-'}}</b></div>
+              <div class="informed"> <label>Informed</label><br/> <b>{{ invoice.informed_me or '-'}}</b></div>
+              <div class="sent"><label>Sent</label>  <br />  <b> {{ invoice.sent_at.strftime(date_format) or '-'}} </b></div>
+              <div class="paid"><label>Paid</label><br /><b> {{ invoice.paid_at.strftime(date_format) or '-'}} </b></div>
+              <div class="repaid"><label>Repaid</label><br /><b>{{ invoice.repaid_at.strftime(date_format) or '-'}} </b></div>
+          </div>
+         </div>
+    {% endfor %}
+
+{% endblock %}

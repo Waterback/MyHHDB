@@ -39,19 +39,20 @@ class PKVInvoice(db.Model):
     #drs = db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
     amount = db.Column(db.Float)
     comment = db.Column(db.String(250))
-    sent_to_pkv = db.Column(db.Boolean)
-    sent_at = db.Column(db.DateTime)
-    paid = db.Column(db.Boolean)
-    paid_at = db.Column(db.DateTime)
-    repaid = db.Column(db.Boolean)
-    repaid_at = db.Column(db.DateTime)
+    informed_me = db.Column(db.String())
+#    sent_to_pkv = db.Column(db.Boolean)
+    sent_at = db.Column(db.Date,  nullable=True)
+#    paid = db.Column(db.Boolean)
+    paid_at = db.Column(db.Date,  nullable=True)
+#    repaid = db.Column(db.Boolean)
+    repaid_at = db.Column(db.Date,  nullable=True)
     state = db.Column(db.String(16))
 
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     statement_id = db.Column(db.Integer, db.ForeignKey('insurance_statement.id'), nullable=True)
 
     def __repr__(self):
-        return '<Invoice {}>'.format(self.patient.patient )
+        return '<Invoice {}-{}>'.format(self.invoice_date, self.patient_id )
 
 class Insurance_statement(db.Model):
     __tablename__= "insurance_statement"

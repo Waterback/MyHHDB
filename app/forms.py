@@ -13,13 +13,16 @@ class InvoiceForm(FlaskForm):
     #patient = StringField('Patient', validators=[DataRequired()])
     amount = FloatField('Amount', validators=[DataRequired()])
     drs = StringField('Dottores', validators=[])
-    sent = BooleanField('Sent to PKV')
-    due_date = DateField('Date Due', validators=[Optional()])
-    paid = BooleanField('Paid')
-    invoice_date= DateField('Invoice date' )
-    repaid = BooleanField('Repaid')
+#    sent = BooleanField('Sent to PKV')
+    due_date = DateField('Date Due')
+#   paid = BooleanField('Paid')
+    informed_me = StringField('Information', validators=[])
+    invoice_date = DateField('Invoice date')
+#    repaid = BooleanField('Repaid')
     submit = SubmitField('new Invoice')
-
+    sent_at = DateField('Invoice Sent', validators=[Optional()])
+    paid_at = DateField('Invoice Paid', validators=[Optional()])
+    repaid_at = DateField('Invoice Sent', validators=[Optional()])
     patient = SelectField(
         'Patient', coerce=int,
         validators=[DataRequired()],

@@ -4,9 +4,10 @@ from app.models import  User, PKVInvoice, Patients
 from flask import render_template, flash, redirect, url_for, Flask, request
 from app.forms import LoginForm, InvoiceForm
 from flask_login import current_user, login_user, login_required, logout_user
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from werkzeug.urls import url_parse
-from datetime import datetime
+from datetime import datetime, time, date, timedelta, tzinfo
 
 datef = '%Y-%m-%d'
 
@@ -56,36 +57,39 @@ def invoices():
     form.patient.choices = [(a.id, a.patient) for a in Patients.query.order_by(Patients.patient)]
     form.patient.choices.append((0,''))
     if form.validate_on_submit():
-        print "patient:", form.patient.data
         sentat=None;paidat=None;repaidat=None
-        if form.sent.data:
-            sentat = datetime.utcnow()
-        if form.paid.data:
-            paidat = datetime.utcnow()
-        if form.repaid.data:
-            repaidat = datetime.utcnow()
-
-        print "=>", form.patient.data
 
         inv = PKVInvoice(patient_id=form.patient.data,
                          amount=form.amount.data,
                          comment=form.drs.data,
                          invoice_date=form.invoice_date.data,
                          due_date=form.due_date.data,
-                         sent_to_pkv=form.sent.data,
-                         sent_at=sentat,
-                         paid=form.paid.data,
-                         paid_at=paidat,
-                         repaid=form.repaid.data,
-                         repaid_at=repaidat,
+                         sent_at=form.sent_at.data,
+                         paid_at=form.paid_at.data,
+                         repaid_at=form.repaid_at.data,
                          )
         try:
             db.session.add(inv)
             db.session.commit()
             flash("Invoice created")
         except IntegrityError, e:
-            print e.message
+            flash(e.message)
         return redirect(url_for('invoices'))
-    invoices = PKVInvoice.query.all()
-    return render_template('invoices.html', title='Invoices', form=form, invoices=invoices, date_format=datef)
+    year = request.args.get('year', datetime.now().year, type=int)
+    if year <= 1972:
+        year = datetime.now().year
+    previousyear = year -1
+    range = getyearrange_fromyear(year)
+    invoices = PKVInvoice.query.filter(PKVInvoice.invoice_date >= range.get('df')).filter(PKVInvoice.invoice_date <= range.get('dt')).all()
+    #invoices = PKVInvoice.query.filter(text("invoicedate>=:df and invoice_date<=:dt"))\
+     #                           .params(df=range.get('df'), dt=range.get('dt')).order_by(PKVInvoice.invoice_date).all()
+    print year, previousyear, "=>", len(invoices)
+    print invoices
+    return render_template('invoices.html', title='Invoices',
+                           form=form, invoices=invoices, date_format=datef, nowyear = datetime.now().year, year=year, previousyear=previousyear)
 
+
+
+
+def getyearrange_fromyear(year):
+    return({"df": date(year,1,1), "dt": date(year,12,31)})
